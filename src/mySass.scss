@@ -1,0 +1,202 @@
+// colors
+$black: #706464;
+$white: #ffffff;
+$firstColor: #cb4256;
+$secondColor: #4e4242;
+$backgroundGrey: #ececec;
+
+// Responsive
+@mixin for-size($size) {
+    @if $size == phone-only {
+      @media (max-width: 599px) { @content; }
+    }
+    @else if $size == tablet-portrait-up {
+      @media (min-width: 600px) { @content; }
+    }
+    @else if $size == tablet-landscape-up {
+      @media (min-width: 900px) { @content; }
+    }
+    @else if $size == laptop-up {
+      @media (min-width: 1200px) { @content; }
+    }
+    @else if $size == big-screen {
+        @media (min-width: 1900px) { @content; }
+    }
+}
+
+
+// the form
+@mixin positionInputFields(){
+  width: 100%;
+  @include for-size(tablet-landscape-up){
+      display: flex;
+      justify-content: space-between;
+      >div{
+          width: 100%;
+      }
+      >div{
+        padding-right: 50px;
+    }
+    >div:last-child{
+        padding-right: 0;
+    }
+  }
+  >div{
+    margin-bottom: 20px;
+    label, input, textarea{
+        // fallback
+        width: 100%;
+        // fallback
+        width: stretch;
+        // firefox
+        width: -moz-available;
+        // chrome
+        width: -webkit-fill-available;
+    }
+    input, textarea{
+        padding: 14px;
+    }
+  }
+  @include for-size(tablet-landscape-up){
+      >div{
+          padding-right: 50px;
+      }
+      >div:last-child{
+          padding-right: 0;
+      }
+  }
+}
+
+@mixin colorForm($textColor){
+  input, textarea{
+    background-color: rgba(white, 0.1);
+    border: none;
+    border-bottom: 1px $textColor solid;
+    color: $textColor;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+      -webkit-text-fill-color: $textColor;
+      background-color: rgba(white, 0.1);
+      box-shadow: initial;
+      -webkit-box-shadow: initial;
+      transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+@mixin customCheckbox($colorOnFocus){
+  input[type="checkbox"] {
+      opacity: 0;
+  }
+
+  label {
+      // set the width to initial, because it is 100% at this moment
+      width: initial;
+      position: relative;
+      display: inline-block;
+      padding: 0 20px 0 40px;
+  }
+
+  label::before, label::after {
+      position: absolute;
+      content: "";
+      /*Needed for the line-height to take effect*/
+      display: inline-block;
+  }
+
+  /*Outer box of the fake checkbox*/
+  label::before{
+      height: 16px;
+      width: 16px;
+      border: 1px solid;
+      left: 0px;
+      top: 3px;
+  }
+
+  /*Checkmark of the fake checkbox*/
+  label::after {
+      height: 5px;
+      width: 9px;
+      border-left: 2px solid;
+      border-bottom: 2px solid;
+      transform: rotate(-45deg);
+      left: 4px;
+      top: 7px;
+  }
+
+  /*Hide the checkmark by default*/
+  input[type="checkbox"] + label::after {
+      content: none;
+  }
+
+  /*Unhide on the checked state*/
+  input[type="checkbox"]:checked + label::after {
+      content: "";
+  }
+
+  /*Adding focus styles on the outer-box of the fake checkbox*/
+  input[type="checkbox"]:focus + label::before {
+      outline: $colorOnFocus auto 5px;
+  }
+}
+
+
+@mixin styleButton($textcolor, $buttoncolor){
+  background-color: $buttoncolor;
+  color: $textcolor;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+// -----------------------------------------------------
+
+.inside{
+  margin: 0 auto;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  width: 90vw;
+  @include for-size(tablet-portrait-up){
+      width: 80vw;
+  }
+  @include for-size(tablet-landscape-up){
+      width: 70vw;
+  }
+  @include for-size(laptop-up){
+      width: 60vw;
+  }
+}
+
+
+.form{
+  background-color: $firstColor;
+  color: white;
+  form{
+      padding-top: 20px;
+      .group{
+          @include positionInputFields();
+          @include colorForm($white);
+      }
+      .checkbox{   
+          padding-bottom: 20px;            
+          @include customCheckbox(red);
+      }
+      button{
+          @include styleButton($white, $secondColor);
+      }
+  }
+}
