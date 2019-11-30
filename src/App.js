@@ -113,50 +113,6 @@ class App extends Component{
   render(){
     return (
       <div>
-        <div>
-          <div className="inside">
-            <p>maak hier uw formulier</p>
-            <form onSubmit={this.handleSubmit}>
-            <InputGroup>
-              <Field
-                no = "aantal rijen met twee kolommen"
-                name="tweeCol"
-                type="number"
-                value={this.state.tweeCol}
-                onChange={this.handleChange}
-              >
-              </Field>
-              {/* <Field
-                no = "aantal rijen met één kolom"
-                name="eenCol"
-                type="number"
-                value={this.state.eenCol}
-                onChange={this.handleChange}
-              >
-              </Field>
-              <Field
-                no = "aantal textareas"
-                name="textarea"
-                type="number"
-                value={this.state.textarea}
-                onChange={this.handleChange}
-              >
-              </Field>
-              <Field
-                no = "aantal checkboxes"
-                name="checkboxes"
-                type="number"
-                value={this.state.checkboxes}
-                onChange={this.handleChange}
-              >
-              </Field> */}
-             </InputGroup> 
-             <button type="submit" className="submit">
-                Maak form
-              </button>
-            </form>
-          </div>
-        </div>
         <div className="form">
           <div className="inside">
               <h2>my custom form</h2>
